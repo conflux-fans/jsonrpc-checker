@@ -1,0 +1,33 @@
+{
+  "endpoint": "https://evmtestnet.confluxrpc.com",
+  "checkTasks": [
+    {
+      "method": "eth_protocolVersion",
+      "params": []
+    },
+    {
+      "method": "eth_coinbase",
+      "params": []
+    },
+    {
+      "method": "eth_gasPrice",
+      "params": []
+    },
+    {
+      "method": "eth_mining",
+      "params": []
+    },
+    {
+      "method": "eth_hashrate",
+      "params": []
+    },
+    {
+      "method": "eth_getBalance",
+      "params": ["0x0D2418c13e6d48bEEE26f2CF42d67Dfe0b0613DE"]
+    },
+    {
+      "method": "eth_getTransactionCount",
+      "params": ["0x0D2418c13e6d48bEEE26f2CF42d67Dfe0b0613DE"]
+    }
+  ]
+}

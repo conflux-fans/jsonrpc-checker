@@ -1,0 +1,30 @@
+{
+  "name": "@conflux-dev/jsonrpc-checker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/conflux-fans/jsonrpc-checker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/conflux-fans/jsonrpc-checker/issues"
+  },
+  "homepage": "https://github.com/conflux-fans/jsonrpc-checker#readme",
+  "dependencies": {
+    "commander": "^8.3.0",
+    "debug": "^4.3.3",
+    "dotenv": "^10.0.0",
+    "eth-provider": "^0.10.0",
+    "ethers": "^5.5.3",
+    "js-conflux-sdk": "^2.0.0-beta.15",
+    "lodash": "^4.17.21",
+    "web3": "^1.7.0"
+  }
+}
