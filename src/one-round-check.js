@@ -24,31 +24,21 @@ async function main() {
     method: 'eth_getTransactionByHash',
     params: [txHash]
   });
-  reports = checkSchema('tx', tx, RPCschema['eth_getTransactionByHash'].result.schema);
-  if (reports.length > 0) {
-    console.log('Checking TX', reports);
-  }
-  // console.log('TX', tx);
+  doTheCheck('tx', tx, 'eth_getTransactionByHash');
 
   // query receipt
   const receipt = await provider.request({
     method: 'eth_getTransactionReceipt',
     params: [txHash]
   });
-  reports = checkSchema('Receipt', receipt, RPCschema['eth_getTransactionReceipt'].result.schema);
-  if (reports.length > 0) {
-    console.log('Checking receipt', reports);
-  }
+  doTheCheck('Receipt', receipt, 'eth_getTransactionReceipt');
 
   // query block
   const block = await provider.request({
     method: 'eth_getBlockByNumber',
     params: [receipt.blockNumber, false]
   });
-  reports = checkSchema('Block', block, RPCschema['eth_getBlockByNumber'].result.schema);
-  if (reports.length > 0) {
-    console.log('Checking block', reports);
-  }
+  doTheCheck('Block', block, 'eth_getBlockByNumber');
 
   // query log
   const logs = await provider.request({
@@ -58,12 +48,16 @@ async function main() {
       toBlock: block.number,
     }]
   });
-  reports = checkSchema('Logs', logs, RPCschema['eth_getLogs'].result.schema);
-  if (reports.length > 0) {
-    console.log('Checking logs', reports);
-  }
+  doTheCheck('logs', logs, 'eth_getLogs');
 
   console.log('\nOne round(send, tx, receipt, block, log) checking finished.\n');
 }
+
+function doTheCheck(field, data, schemaName) {
+  let reports = checkSchema(field, data, RPCschema[schemaName].result.schema);
+  if (reports.length > 0) {
+    console.log('Checking logs', reports);
+  }
+};
 
 main().catch(console.log);
