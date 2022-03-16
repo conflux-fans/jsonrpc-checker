@@ -45,7 +45,7 @@ program
   });
 
 program
-  .command('buildTransferTx')
+  .command('buildERC20TransferTx')
   .argument('[to]', 'Transaction receiver', 'to')
   .argument('[value]', 'Transaction value', 'value')
   .action(async (to, value) => {

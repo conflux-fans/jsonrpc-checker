@@ -33,7 +33,7 @@ function loadEthRPCschema() {
 async function waitTx(txHash) {
   let tryTime = 3000;
   while(tryTime > 0) {
-    let tx = await web3.eth.getTransaction(txHash);
+    let tx = await web3.eth.getTransactionReceipt(txHash);
     if (tx) {
       return tx;
     }
@@ -46,9 +46,14 @@ function waitNS(n = 1) {
   return new Promise(resolve => setTimeout(resolve, n * 1000));
 }
 
+const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
+const ZERO_HASH = '0x0000000000000000000000000000000000000000000000000000000000000000';
+
 module.exports = {
   buildRawTx,
   buildERC20Tx,
   waitTx,
   loadEthRPCschema,
+  ZERO_ADDRESS,
+  ZERO_HASH,
 }

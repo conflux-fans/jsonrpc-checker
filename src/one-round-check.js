@@ -9,13 +9,19 @@ const RPCschema = utils.loadEthRPCschema();
 async function main() {
   let reports = [];
   // build tx
-  const rawTx = await utils.buildERC20Tx(process.env.ETH_ADDRESS, 100, process.env.PRIVATE_KEY);
+  // const rawTx = await utils.buildERC20Tx(process.env.ETH_ADDRESS, 100, process.env.PRIVATE_KEY);
+  const rawTx = await utils.buildRawTx({
+    to: process.env.ETH_ADDRESS, 
+    value: 100,
+    gas: 21000,
+  }, process.env.PRIVATE_KEY);
   
   // send tx
   const txHash = await provider.request({
     method: 'eth_sendRawTransaction',
     params: [rawTx.rawTransaction]
   });
+  console.log('txHash', txHash);
 
   // wait tx
   await utils.waitTx(txHash);

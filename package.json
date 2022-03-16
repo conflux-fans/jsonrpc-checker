@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "mock-server": "open-rpc-mock-server -d ./eth-openrpc.json"
   },
   "repository": {
     "type": "git",
@@ -18,12 +19,14 @@
   },
   "homepage": "https://github.com/conflux-fans/jsonrpc-checker#readme",
   "dependencies": {
+    "@open-rpc/mock-server": "^1.7.4",
+    "axios": "^0.26.1",
     "commander": "^8.3.0",
     "debug": "^4.3.3",
     "dotenv": "^10.0.0",
     "eth-provider": "^0.10.0",
     "ethers": "^5.5.3",
-    "js-conflux-sdk": "^2.0.0-beta.15",
+    "js-conflux-sdk": "^2.0.4",
     "lodash": "^4.17.21",
     "web3": "^1.7.0"
   }
