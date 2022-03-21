@@ -20,6 +20,7 @@
   "homepage": "https://github.com/conflux-fans/jsonrpc-checker#readme",
   "dependencies": {
     "@open-rpc/mock-server": "^1.7.4",
+    "ajv": "^8.10.0",
     "axios": "^0.26.1",
     "commander": "^8.3.0",
     "debug": "^4.3.3",

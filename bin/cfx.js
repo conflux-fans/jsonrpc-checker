@@ -77,11 +77,15 @@ program
   .action(async () => {
     const txs = require(path.join(__dirname, '../txs.json'));
     const receipt1 = await conflux.cfx.sendRawTransaction(txs.cfxTransfer.raw).executed();
+    txs.cfxTransferReceipt = receipt1;
     console.log('tx1: ', receipt1.transactionHash);
     const receipt2 = await conflux.cfx.sendRawTransaction(txs.erc20Deploy.raw).executed();
+    txs.erc20DeployReceipt = receipt2;
     console.log('tx2: ', receipt2.transactionHash);
     const receipt3 = await conflux.cfx.sendRawTransaction(txs.erc20Transfer.raw).executed();
+    txs.erc20TransferReceipt = receipt3;
     console.log('tx3: ', receipt3.transactionHash);
+    fs.writeFileSync('txs.json', JSON.stringify(txs, null, 2));
   });
 
 program.parse(process.argv);

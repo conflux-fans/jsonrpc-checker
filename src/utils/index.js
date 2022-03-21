@@ -1,25 +1,5 @@
-// require('dotenv').config();
 const _ = require('lodash');
-const Web3 = require('web3');
-const web3 = new Web3(Web3.givenProvider || process.env.ETH_RPC);
-// load ERC20 contract abi and address
-const GLD = require('../GLD.json');
-const gld = new web3.eth.Contract(GLD.abi, GLD.address);
-
-function buildRawTx(tx, privateKey) {
-  return web3.eth.accounts.signTransaction(tx, privateKey);
-}
-
-function buildERC20Tx(target, value, privateKey) {
-  const txData = gld.methods.transfer(target, value).encodeABI();
-  const txMeta = {
-    to: GLD.address,
-    value: 0,
-    gas: 500000,
-    data: txData,
-  };
-  return buildRawTx(txMeta, privateKey);
-}
+const axios = require('axios').default;
 
 function loadEthRPCschema() {
   const ETH_OPEN_RPC = require('../eth-openrpc.json');
@@ -48,12 +28,20 @@ function waitNS(n = 1) {
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 const ZERO_HASH = '0x0000000000000000000000000000000000000000000000000000000000000000';
+const ERC20_TRANSFER_TOPIC = '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef';
+
+async function request(url, req) {
+  req.jsonrpc = '2.0';
+  req.id = `${Date.now()}-${_.random(0, 100000)}`;
+  const { data } = await axios.post(url, req);
+  return data;
+}
 
 module.exports = {
-  buildRawTx,
-  buildERC20Tx,
   waitTx,
   loadEthRPCschema,
   ZERO_ADDRESS,
   ZERO_HASH,
+  ERC20_TRANSFER_TOPIC,
+  request,
 }
