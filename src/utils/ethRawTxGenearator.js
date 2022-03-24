@@ -2,7 +2,7 @@
 const Web3 = require('web3');
 const web3 = new Web3(Web3.givenProvider || process.env.ETH_RPC);
 // load ERC20 contract abi and address
-const GLD = require('../GLD.json');
+const GLD = require('../../GLD.json');
 const gld = new web3.eth.Contract(GLD.abi, GLD.address);
 
 function buildRawTx(tx, privateKey) {
@@ -19,3 +19,8 @@ function buildERC20Tx(target, value, privateKey) {
   };
   return buildRawTx(txMeta, privateKey);
 }
+
+module.exports = {
+  buildRawTx,
+  buildERC20Tx,
+};

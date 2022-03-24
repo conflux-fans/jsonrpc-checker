@@ -9,7 +9,7 @@ const conflux = new Conflux({
   networkId: Number(process.env.CFX_NETWORK_ID),
 });
 
-const CRC20_META = require('../GLD.json');
+const CRC20_META = require('../../GLD.json');
 
 const crc20Contract = conflux.Contract({
   abi: CRC20_META.abi,

@@ -1,8 +1,10 @@
 const _ = require('lodash');
 const axios = require('axios').default;
+const { ethers } = require('ethers');
+const CRC20_META = require('../../GLD.json');
+const ETH_OPEN_RPC = require('../../eth-openrpc.json');
 
 function loadEthRPCschema() {
-  const ETH_OPEN_RPC = require('../eth-openrpc.json');
   const ETH_METHODS = _.groupBy(ETH_OPEN_RPC.methods, 'name');
   for(let key in ETH_METHODS) {
     ETH_METHODS[key] = ETH_METHODS[key][0];
@@ -37,6 +39,10 @@ async function request(url, req) {
   return data;
 }
 
+function formatHex(number) {
+  return ethers.utils.hexValue(number);
+}
+
 module.exports = {
   waitTx,
   loadEthRPCschema,
@@ -44,4 +50,7 @@ module.exports = {
   ZERO_HASH,
   ERC20_TRANSFER_TOPIC,
   request,
+  formatHex,
+  waitNS,
+  CRC20_META,
 }

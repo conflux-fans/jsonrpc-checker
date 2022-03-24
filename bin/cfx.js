@@ -1,8 +1,9 @@
 require('dotenv').config();
 const { Conflux } = require('js-conflux-sdk');
-const rawTxBuilder = require('../src/cfxRawTxGenerator');
+const rawTxBuilder = require('../src/utils/cfxRawTxGenerator');
 const { 
   ZERO_ADDRESS, 
+  CRC20_META,
 } = require('../src/utils');
 const fs = require('fs');
 const path = require('path');
@@ -15,8 +16,7 @@ const conflux = new Conflux({
 const account = conflux.wallet.addPrivateKey(process.env.TEST_KEY);
 
 // load ERC20 contract
-const GLD = require('../GLD.json');
-const gld = conflux.Contract(GLD);
+// const gld = conflux.Contract(CRC20_META);
 
 const { program } = require('commander');
 program.version('0.1.1');
@@ -68,14 +68,15 @@ program
         raw: tx2.serialize(),
       }
     };
-    fs.writeFileSync('./txs.json', JSON.stringify(txs, null, 2));
+    fs.writeFileSync(path.join(__dirname, '../build/cfxtxs.json'), JSON.stringify(txs, null, 2));
     console.log('Generate Success!');
   });
 
 program
   .command('sendTxs')
   .action(async () => {
-    const txs = require(path.join(__dirname, '../txs.json'));
+    const txsFilePath = path.join(__dirname, '../build/cfxtxs.json');
+    const txs = require(txsFilePath);
     const receipt1 = await conflux.cfx.sendRawTransaction(txs.cfxTransfer.raw).executed();
     txs.cfxTransferReceipt = receipt1;
     console.log('tx1: ', receipt1.transactionHash);
@@ -85,10 +86,10 @@ program
     const receipt3 = await conflux.cfx.sendRawTransaction(txs.erc20Transfer.raw).executed();
     txs.erc20TransferReceipt = receipt3;
     console.log('tx3: ', receipt3.transactionHash);
-    fs.writeFileSync('txs.json', JSON.stringify(txs, null, 2));
+    fs.writeFileSync(txsFilePath, JSON.stringify(txs, null, 2));
   });
 
 program.parse(process.argv);
 
 const options = program.opts();
-// if (options.debug) console.log(options);
+if (options.debug) console.log(options);

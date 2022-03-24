@@ -4203,6 +4203,7 @@
 						},
 						"contractAddress": {
 							"title": "contract address",
+              "nullable": true,
 							"type": "string",
 							"pattern": "^0x[0-9,a-f,A-F]{40}$",
 							"description": "The contract address created, if the transaction was a contract creation, otherwise null."

@@ -1,13 +1,13 @@
 require('dotenv').config();
+const { ZERO_HASH, ERC20_TRANSFER_TOPIC, CRC20_META } = require('../src/utils')
+const fs = require('fs');
+const path = require('path')
 const { 
   Conflux, 
   CONST,
   format,
 } = require('js-conflux-sdk');
-const axios = require('axios').default;
-const { ZERO_HASH, ERC20_TRANSFER_TOPIC } = require('../src/utils')
-const fs = require('fs');
-const txs = require('../txs.json');
+const txs = require(path.join(__dirname, '../build/cfxtxs.json'));
 
 const conflux = new Conflux({
   url: process.env.CFX_RPC,
@@ -15,8 +15,6 @@ const conflux = new Conflux({
 });
 
 const testAccount = conflux.wallet.addPrivateKey(process.env.TEST_KEY);
-
-const CRC20_META = require('../GLD.json');
 
 /**
  * Things to prepare:
@@ -56,6 +54,8 @@ async function epochNumberAndTags() {
 // The value is either a params array or a function that can generate a params array
 const CORE_METHODS = {
   'cfx_getBlockByEpochNumber': [
+    ['latest_mined', false],
+    ['latest_mined', true],
     ['latest_state', false],
     ['latest_state', true],
     ['0x0', false],
@@ -234,7 +234,7 @@ async function generateRequests() {
   }));
 
   // Address and epoch param methods
-  fs.writeFileSync('./requests.json', JSON.stringify(requests, null, 2));
+  fs.writeFileSync(path.join(__dirname, '../build/requests.json'), JSON.stringify(requests, null, 2));
   return requests;
 }
 

@@ -1,7 +1,8 @@
 require('dotenv').config();
-const requests = require('../requests.json');
+const requests = require('../build/requests.json');
 const { request } = require('../src/utils');
 const fs = require('fs');
+const path = require('path');
 
 const examples = {};
 async function main() {
@@ -28,7 +29,7 @@ async function main() {
     }
   }
 
-  fs.writeFileSync('./rpc-examples.json', JSON.stringify(examples, null, 2));
+  fs.writeFileSync(path.join(__dirname, '../build/rpc-examples.json'), JSON.stringify(examples, null, 2));
 }
 
 main().catch(console.log);
